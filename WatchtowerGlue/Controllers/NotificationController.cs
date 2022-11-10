@@ -4,6 +4,7 @@ using WatchtowerGlue.Services;
 namespace WatchtowerGlue.Controllers;
 
 [ApiController]
+[Route("/")]
 public class NotificationController : ControllerBase {
 	private readonly ILogger<NotificationController> m_Logger;
 	private readonly NotificationService m_Service;
@@ -15,6 +16,10 @@ public class NotificationController : ControllerBase {
 
 	[HttpPost]
 	public void ForwardNotification(RegistryEvents registryEvents) {
+		m_Logger.LogInformation("Received events:");
+		foreach (RegistryEvent evt in registryEvents.Events) {
+			m_Logger.LogInformation("{Action} {Repo} {Target}", evt.Action, evt.Request.Host, evt.Target.Repository);
+		}
 		m_Service.Receive(registryEvents);
 	}
 }
