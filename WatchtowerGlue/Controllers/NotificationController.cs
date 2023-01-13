@@ -15,52 +15,37 @@ public class NotificationController : ControllerBase {
 	}
 
 	[HttpPost]
-	public void ForwardNotification(RegistryEvents registryEvents) {
+	public async Task ForwardNotification(RegistryEvents registryEvents) {
+		/*
+		RegistryEvents registryEvents;
+		using (var sr = new StreamReader(HttpContext.Request.Body, leaveOpen: false)) {
+			string body = await sr.ReadToEndAsync();
+			Console.WriteLine(body);
+			registryEvents = System.Text.Json.JsonSerializer.Deserialize<RegistryEvents>(body)!;
+		}//*/
+
 		m_Logger.LogInformation("Received events:");
-		foreach (RegistryEvent evt in registryEvents.Events) {
-			m_Logger.LogInformation("{Action} {Repo} {Target}", evt.Action, evt.Request.Host, evt.Target.Repository);
+		foreach (RegistryEvent evt in registryEvents.events) {
+			m_Logger.LogInformation("{Action} {Repo} {Target}", evt.action, evt.request.host, evt.target.repository);
 		}
 		m_Service.Receive(registryEvents);
 	}
 }
 
 public class RegistryEvents {
-	public RegistryEvent[] Events { get; set; }
+	public RegistryEvent[] events { get; set; }
 }
 
 public class RegistryEvent {
-	public Guid Id { get; set; }
-	public DateTimeOffset Timestamp { get; set; }
-	public string Action { get; set; }
-	public EventTarget Target { get; set; }
-	public EventRequest Request { get; set; }
-	public EventActor Actor { get; set; }
-	public EventSource Source { get; set; }
+	public string action { get; set; }
+	public EventTarget target { get; set; }
+	public EventRequest request { get; set; }
 }
 
 public class EventTarget {
-	public string MediaType { get; set; }
-	public string Digest { get; set; }
-	public long? Size { get; set; }
-	public long Length { get; set; }
-	public string Repository { get; set; }
-	public string Url { get; set; }
-	public string? Tag { get; set; }
+	public string repository { get; set; }
 }
 
 public class EventRequest {
-	public Guid Id { get; set; }
-	public string Addr { get; set; }
-	public string Host { get; set; }
-	public HttpMethod Method { get; set; }
-	public string UserAgent { get; set; }
-}
-
-public class EventActor {
-	public string Name { get; set; }
-}
-
-public class EventSource {
-	public string Addr { get; set; }
-	public Guid? InstanceId { get; set; }
+	public string host { get; set; }
 }

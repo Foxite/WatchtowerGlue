@@ -1,5 +1,6 @@
 using System.Net.Http.Headers;
 using System.Text.Encodings.Web;
+using Microsoft.AspNetCore.Mvc;
 using WatchtowerGlue.Controllers;
 using Timer = System.Timers.Timer;
 
@@ -18,13 +19,13 @@ public class NotificationService {
 
 		m_Timer.AutoReset = false;
 		m_Timer.Enabled = false;
-		m_Timer.Interval = long.Parse(Environment.GetEnvironmentVariable("DEBOUNCE_MILLIS")!);
+		m_Timer.Interval = long.Parse(Environment.GetEnvironmentVariable("DEBOUNCE_MILLIS") ?? "5000");
 		m_Timer.Elapsed += (o, e) => Forward();
 	}
 
 	public void Receive(RegistryEvents registryEvents) {
 		lock (m_Lock) {
-			foreach (RegistryEvent @event in registryEvents.Events) {
+			foreach (RegistryEvent @event in registryEvents.events) {
 				m_PendingEvents.Add(@event);
 			}
 
@@ -40,14 +41,25 @@ public class NotificationService {
 			try {
 				string images;
 				lock (m_Lock) {
-					images = string.Join(",", m_PendingEvents.Where(evt => evt.Action == "push").Select(evt => $"{evt.Request.Host}/{evt.Target.Repository}"));
+					images = string.Join(",", m_PendingEvents.Where(evt => evt.action == "push").Select(evt => $"{evt.request.host}/{evt.target.repository}").Distinct());
+				}
+				
+				m_Logger.LogInformation("Forwarding notifications: {Images}", images);
+
+				string? watchtowerToken = Environment.GetEnvironmentVariable("WATCHTOWER_TOKEN");
+				AuthenticationHeaderValue? authorization;
+
+				if (watchtowerToken != null) {
+					authorization = new AuthenticationHeaderValue("Bearer " + watchtowerToken);
+				} else {
+					authorization = null;
 				}
 
 				await m_Http.SendAsync(new HttpRequestMessage() {
 					Method = HttpMethod.Get,
 					RequestUri = new Uri(Environment.GetEnvironmentVariable("WATCHTOWER") + "/v1/update?image=" + UrlEncoder.Default.Encode(images)),
 					Headers = {
-						Authorization = new AuthenticationHeaderValue("Bearer " + Environment.GetEnvironmentVariable("WATCHTOWER_TOKEN"))
+						Authorization = authorization
 					}
 				});
 			} catch (Exception e) {
