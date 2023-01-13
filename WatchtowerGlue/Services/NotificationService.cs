@@ -51,7 +51,7 @@ public class NotificationService {
 				AuthenticationHeaderValue? authorization;
 
 				if (watchtowerToken != null) {
-					authorization = new AuthenticationHeaderValue("Bearer " + watchtowerToken);
+					authorization = new AuthenticationHeaderValue("Bearer", watchtowerToken);
 				} else {
 					authorization = null;
 				}
