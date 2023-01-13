@@ -2,6 +2,7 @@ using System.Net.Http.Headers;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Mvc;
 using WatchtowerGlue.Controllers;
+using WatchtowerGlue.Model;
 using Timer = System.Timers.Timer;
 
 namespace WatchtowerGlue.Services; 
