@@ -2,7 +2,10 @@ name: Build and push Docker image
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
+    paths:
+      - WatchtowerGlue
   pull_request:
 
 jobs:
