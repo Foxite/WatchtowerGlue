@@ -7,6 +7,19 @@ builder.Services.AddControllers();
 builder.Services.AddSingleton<HttpClient>();
 builder.Services.AddSingleton<NotificationService>();
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 var app = builder.Build();
 
 app.UseHttpLogging();
