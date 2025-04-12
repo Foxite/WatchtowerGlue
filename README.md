@@ -25,7 +25,7 @@ notifications:
 WatchtowerGlue is not supposed to be accessible from the internet, as it does not authenticate its incoming requests.
 
 Environment variables:
-- DEBOUNCE_MILLIS: the amount of milliseconds to wait before making a request to Watchtower. Useful if your workflows push multiple images, to avoid triggering multiple updates.
+- DEBOUNCE_MILLIS: the amount of milliseconds to wait before making a request to Watchtower. Useful if your workflows push multiple images, to avoid triggering multiple updates. Default 5000
 - WATCHTOWER_TOKEN: the authorization token configured in Watchtower's http api.
 - WATCHTOWER: the full hostname including http:// or https:// that Watchtower is located at.
 
