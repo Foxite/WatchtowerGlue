@@ -7,6 +7,7 @@ using JWT.Serializers;
 var httpClient = new HttpClient();
 
 const string apiUrl = "http://localhost:5134/notify";
+const string keyId = "sig-1744467848";
 const string privateKeyPem =
 	"""
     -----BEGIN PRIVATE KEY-----
@@ -36,7 +37,7 @@ static long EpochTimestamp(DateTime dateTime) {
 }
 
 string jwt = jwtEncoder.Encode(new Dictionary<string, object>() {
-	{ "kid", "sig-1744467848" },
+	{ "kid", keyId },
 }, new {
 	jti = Guid.NewGuid(),
 	iat = EpochTimestamp(DateTime.UtcNow),
@@ -45,6 +46,7 @@ string jwt = jwtEncoder.Encode(new Dictionary<string, object>() {
 	images = (string[]) ["testimage"],
 }, null);
 
+Console.WriteLine(jwt);
 var result = await httpClient.SendAsync(new HttpRequestMessage() {
 	Method = HttpMethod.Post,
 	RequestUri = new Uri(apiUrl),
