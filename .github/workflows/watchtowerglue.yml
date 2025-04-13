@@ -63,6 +63,6 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           glueUrl: ${{ secrets.GLUE_URL }}
-          privateKey: ${{ secrets.GLUE_KEY }}
-          keyId: ${{ secrets.GLUE_KEY_ID }}
-          algorithm: ${{ secrets.GLUE_ALG }}
+          privateKey: ${{ secrets.WATCHTOWERGLUE_GLUE_KEY }}
+          keyId: ${{ secrets.WATCHTOWERGLUE_GLUE_KEY_ID }}
+          algorithm: ${{ secrets.WATCHTOWERGLUE_GLUE_ALG }}

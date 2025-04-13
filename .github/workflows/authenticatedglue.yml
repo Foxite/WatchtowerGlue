@@ -63,6 +63,6 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           glueUrl: ${{ secrets.GLUE_URL }}
-          privateKey: ${{ secrets.GLUE_KEY }}
-          keyId: ${{ secrets.GLUE_KEY_ID }}
-          algorithm: ${{ secrets.GLUE_ALG }}
+          privateKey: ${{ secrets.AUTHENTICATEDGLUE_GLUE_KEY }}
+          keyId: ${{ secrets.AUTHENTICATEDGLUE_GLUE_KEY_ID }}
+          algorithm: ${{ secrets.AUTHENTICATEDGLUE_GLUE_ALG }}
