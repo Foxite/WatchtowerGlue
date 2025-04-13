@@ -67,4 +67,4 @@ jobs:
           algorithm: ${{ env.GLUE_KEY_ALG }}
           images: ${{ steps.meta.outputs.tags }}
           glueUrl: ${{ secrets.GLUE_URL }}
-          privateKey: ${{ secrets.WATCHTOWERGLUE_GLUE_KEY }}
+          privateKey: ${{ secrets.AUTHENTICATEDGLUE_GLUE_KEY }}
