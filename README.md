@@ -31,3 +31,10 @@ Environment variables:
 
 # AuthenticatedGlue
 AuthenticatedGlue is meant to be used in conjunction with the [trigger-update](https://github.com/Foxite/trigger-update) workflow action. It authenticates all incoming requests using JWTs.
+
+## Environment variables
+| Key               | Description                                                                                 | Example                            |
+|-------------------|---------------------------------------------------------------------------------------------|------------------------------------|
+| Keys__Keys__*     | followed by a key id, the value should be the PEM-encoded certificate for that signing key. | `-----BEGIN CERTIFICATE-----\n...` |
+| Watchtower__Url   | The full URL that Watchtower is accessible from                                             | `http://localhost:8080`            |
+| Watchtower__Token | The HTTP API token for Watchtower                                                           | `mytoken`                          |
