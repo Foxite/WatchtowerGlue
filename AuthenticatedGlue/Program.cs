@@ -42,7 +42,7 @@ builder.Services.AddSingleton<IAlgorithmFactory, KeySelectingAlgorithmFactory>()
 builder.Services.AddSingleton(_ => ValidationParameters.Default);
 
 var app = builder.Build();
-app.UseHttpLogging();
+//app.UseHttpLogging();
 app.MapControllers();
 
 app.Logger.LogInformation("Deployment OK! :ralArtHapp:");
