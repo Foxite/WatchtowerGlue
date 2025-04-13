@@ -22,22 +22,3 @@ public class WatchtowerService(HttpClient httpClient, IOptions<WatchtowerService
 		public string Url { get; set; }
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
