@@ -61,7 +61,7 @@ jobs:
       - name: Trigger update
         uses: Foxite/trigger-update@v0.2.3
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ steps.meta.outputs.tags }}
           glueUrl: ${{ secrets.GLUE_URL }}
           privateKey: ${{ secrets.WATCHTOWERGLUE_GLUE_KEY }}
           keyId: ${{ secrets.WATCHTOWERGLUE_GLUE_KEY_ID }}
