@@ -10,7 +10,7 @@ public class WatchtowerService(HttpClient httpClient, IOptions<WatchtowerService
 	public async Task TriggerUpdate(IEnumerable<string> images) {
 		await httpClient.SendAsync(new HttpRequestMessage() {
 			Method = HttpMethod.Get,
-			RequestUri = new Uri($"{options.Value.Url}/v1/update?image=${UrlEncoder.Default.Encode(string.Join(",", images))}"),
+			RequestUri = new Uri($"{options.Value.Url}/v1/update?image={UrlEncoder.Default.Encode(string.Join(",", images))}"),
 			Headers = {
 				Authorization = new AuthenticationHeaderValue("Bearer", options.Value.Token),
 			},
