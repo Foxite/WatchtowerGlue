@@ -14,7 +14,7 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: watchtowerglue
   BUILD_CONTEXT: WatchtowerGlue
-  DOCKERFILE: ${{ env.BUILD_CONTEXT }}/Dockerfile
+  DOCKERFILE: WatchtowerGlue/Dockerfile
 
 jobs:
   build-and-push-image:

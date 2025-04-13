@@ -14,7 +14,7 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: authenticatedglue
   BUILD_CONTEXT: AuthenticatedGlue
-  DOCKERFILE: ${{ env.BUILD_CONTEXT }}/Dockerfile
+  DOCKERFILE: AuthenticatedGlue/Dockerfile
 
 jobs:
   build-and-push-image:
