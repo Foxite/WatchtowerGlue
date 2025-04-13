@@ -1,0 +1,68 @@
+name: Build AuthenticatedGlue
+
+on:
+  push:
+    paths:
+      - AuthenticatedGlue
+      - .github/workflows/authenticatedglue.yml
+  pull_request:
+    paths:
+      - AuthenticatedGlue
+      - .github/workflows/authenticatedglue.yml
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: authenticatedglue
+  BUILD_CONTEXT: AuthenticatedGlue
+  DOCKERFILE: ${{ env.BUILD_CONTEXT }}/Dockerfile
+
+jobs:
+  build-and-push-image:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          
+      - name: Build and push Docker image
+        id: push
+        uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
+        with:
+          context: ${{ env.REGISTRY }}
+          file: ${{ env.DOCKERFILE }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Generate artifact attestation
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: true
+
+      - name: Trigger update
+        uses: Foxite/trigger-update@v0.2.3
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          glueUrl: ${{ secrets.GLUE_URL }}
+          privateKey: ${{ secrets.GLUE_KEY }}
+          keyId: ${{ secrets.GLUE_KEY_ID }}
+          algorithm: ${{ secrets.GLUE_ALG }}
