@@ -11,15 +11,6 @@ public class NotificationController(ILogger<NotificationController> logger, IJwt
 	[HttpPost]
 	[Consumes("application/jwt")]
 	public async Task<IActionResult> TakeEvent([FromBody] string jwtBody) {
-		Console.WriteLine("AAAAAAAA");
-		//HttpContext.Request.EnableBuffering();
-		//HttpContext.Request.Body.Seek(0, SeekOrigin.Begin);
-		
-		/*
-		using (var sr = new StreamReader(HttpContext.Request.Body, leaveOpen: true)) {
-			jwtBody = await sr.ReadToEndAsync();
-		}
-		*/
 		if (!replayCache.Check(jwtBody)) {
 			logger.LogWarning("Detected replay from {RemoteIp}", HttpContext.Connection.RemoteIpAddress);
 			return BadRequest(new {
