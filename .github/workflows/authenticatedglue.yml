@@ -11,7 +11,7 @@ on:
       - .github/workflows/authenticatedglue.yml
 
 env:
-  REGISTRY: ghcr.io
+  REGISTRY: ghcr.io/Foxite
   IMAGE_NAME: authenticatedglue
   BUILD_CONTEXT: AuthenticatedGlue
   DOCKERFILE: AuthenticatedGlue/Dockerfile

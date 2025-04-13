@@ -11,7 +11,7 @@ on:
       - .github/workflows/watchtowerglue.yml
 
 env:
-  REGISTRY: ghcr.io
+  REGISTRY: ghcr.io/Foxite
   IMAGE_NAME: watchtowerglue
   BUILD_CONTEXT: WatchtowerGlue
   DOCKERFILE: WatchtowerGlue/Dockerfile
