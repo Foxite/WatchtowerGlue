@@ -45,5 +45,4 @@ var app = builder.Build();
 //app.UseHttpLogging();
 app.MapControllers();
 
-app.Logger.LogInformation("Deployment OK! :ralArtHapp:");
 app.Run();
