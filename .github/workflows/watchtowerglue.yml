@@ -3,11 +3,11 @@ name: Build WatchtowerGlue
 on:
   push:
     paths:
-      - WatchtowerGlue
+      - WatchtowerGlue/**
       - .github/workflows/watchtowerglue.yml
   pull_request:
     paths:
-      - WatchtowerGlue
+      - WatchtowerGlue/**
       - .github/workflows/watchtowerglue.yml
 
 env:

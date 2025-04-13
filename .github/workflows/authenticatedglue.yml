@@ -3,11 +3,11 @@ name: Build AuthenticatedGlue
 on:
   push:
     paths:
-      - AuthenticatedGlue
+      - AuthenticatedGlue/**
       - .github/workflows/authenticatedglue.yml
   pull_request:
     paths:
-      - AuthenticatedGlue
+      - AuthenticatedGlue/**
       - .github/workflows/authenticatedglue.yml
 
 env:
