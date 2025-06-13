@@ -43,6 +43,7 @@ public class NotificationService {
 				string images;
 				lock (m_Lock) {
 					images = string.Join(",", m_PendingEvents.Where(evt => evt.action == "push").Select(evt => $"{evt.request.host}/{evt.target.repository}").Distinct());
+					m_PendingEvents.Clear();
 				}
 				
 				m_Logger.LogInformation("Forwarding notifications: {Images}", images);
