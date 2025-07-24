@@ -37,6 +37,11 @@ public class NotificationController(ILogger<NotificationController> logger, IJwt
 				error = "jwt-signature-error",
 				message = ex.Message,
 			});
+		} catch (KeyNotFoundException) {
+			return Unauthorized(new {
+				success = false,
+				error = "key-id-unknown",
+			});
 		}
 
 		logger.LogInformation("Triggering update for: {Images}", string.Join(", ", notification.Images));

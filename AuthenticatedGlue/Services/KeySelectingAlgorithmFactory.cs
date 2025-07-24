@@ -8,7 +8,7 @@ namespace AuthenticatedGlue.Services;
 public class KeySelectingAlgorithmFactory(IOptionsMonitor<KeySelectingAlgorithmFactory.Options> options) : IAlgorithmFactory {
 	public IJwtAlgorithm Create(JwtDecoderContext context) {
 		if (!options.CurrentValue.Keys.TryGetValue(context.Header.KeyId, out string? publicKey)) {
-			throw new Exception($"Cannot find key id {context.Header.KeyId}");
+			throw new KeyNotFoundException($"Cannot find key id {context.Header.KeyId}");
 		}
 
 		var cert = X509Certificate2.CreateFromPem(publicKey);
