@@ -75,4 +75,4 @@ jobs:
           algorithm: ${{ env.GLUE_KEY_ALG }}
           images: ${{ needs.build-and-push-image.outputs.images }}
           glueUrl: ${{ secrets.GLUE_URL }}
-          privateKey: ${{ secrets.GLUE_KEY }}
+          privateKey: ${{ secrets.WATCHTOWERGLUE_GLUE_KEY }}
